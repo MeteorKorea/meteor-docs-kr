@@ -1,11 +1,10 @@
 <template name="concepts">
 
-<h1 id="concepts">Concepts</h1>
+<h1 id="concepts">개념</h1>
 
-We've written our fair share of single-page JavaScript applications by hand.
-Writing an entire application in one language (JavaScript) with one
-data format (JSON) is a real joy.  Meteor is everything we wanted
-when writing those apps.
+우리는 충분히 많은 단일 페이지 JavaScript 애플리케이션을 직접 개발하였다. 
+전체 애플리케이션을 단일 데이터 포맷(JSON)을 가진 단일 언어(JavaScript)로 작성한다는 것은 정말 즐겁다. 
+미티어에는 이런 앱을 작성하는데 있어 우리가 원하는 모든 것이 들어있다.
 
 {{> whatismeteor }}
 {{> structure }}
@@ -22,41 +21,28 @@ when writing those apps.
 
 {{#markdown}}
 
-<h2 id="whatismeteor">What is Meteor?</h2>
+<h2 id="whatismeteor">미티어란 무엇인가?</h2>
 
-Meteor is two things:
+미티어는 두 가지이다:
 
-* A _library of packages_: pre-written, self-contained modules that
-you might need in your app.<br>
-There are about a dozen core Meteor
-packages that most any app will use (for example `webapp`, which
-handles incoming HTTP connections, and `templating`, which lets you
-make HTML templates that automatically update live as data changes).
-Then there are optional packages like `email`, which lets your app
-send emails, or the Meteor Accounts series (`accounts-password`,
-`accounts-facebook`, `accounts-ui`, and others) which provide a
-full-featured user account system that you can drop right into your
-app. In addition to these "core" packages, there are thousands of
-community-written packages in [Atmosphere](https://atmospherejs.com/),
-one of which might do just what you need.
+* _패키지 라이브러리_: 앱에서 필요로 하는 미리 작성된, 독립된 모듈들.<br>
+대부분의 앱에서 사용하는 (예를 들면, `webapp`는 인바운드 HTTP connection을 다루고, `templating`으로 데이터 변경시에 자동적으로 변경되는 HTML 템플릿을 만든다) 십 수개의 core 미티어 패키지가 있다. 그리고 옵션 패키지가 있는데, 여기에는 애플리케이션에서 메일을 보낼 수 있는 email, 또는 애플리케이션에 그냥 넣기만 하면 되는 모든 기능을 갖춘 사용자 계정 시스템인 Meteor Accounts 시리즈(`account-password`, `accounts-facebook`, `accounts-ui`, 등)와 같은 것들이 있다. 그리고 이 "공식" 패키지 외에 커뮤니티의 구성원들이 작성한 수 많은 패키지들이 있는 [Atmosphere](https://atmospherejs.com/)가 있는데 이 중에 바로 여러분이 찾는 바로 그것이 있을 수 있다.
 
-* A _command-line tool_ called `meteor`.<br>
-`meteor` is a build tool analogous to `make`, `rake`, or the non-visual parts of
-Visual Studio. It gathers up all of the source files and assets in your
-application, carries out any necessary build steps (such as compiling
-[CoffeeScript](http://coffeescript.org), minifying CSS, building
-[npm](https://npmjs.org/) modules, or generating source maps), fetches the
-packages used by your app, and outputs a standalone, ready-to-run application
-bundle. In development mode it can do all of this interactively, so that
-whenever you change a file you immediately see the changes in your browser. It's
-super easy to use out of the box, but it's also extensible: you can add support
-for new languages and compilers by adding build plugin packages to your app.
 
-The key idea in the Meteor package system is that _everything should
-work identically in the browser and on the server_ (wherever it makes
-sense, of course: browsers can't send email and servers can't capture
-mouse events). Our whole ecosystem has been built from the ground up
-to support this.
+* `meteor`라는 이름의 _command-line 도구l_.<br>
+`meteor`는 빌드도구로 `make`, `rake`, 또는 비주얼스튜디오의 non-visual 파트와 유사하다. 
+이것은 애플리케이션의 모든 소스파일과 자원을 모아서, 
+필요한 빌드 단계([CoffeeScript](http://coffeescript.org)를 컴파일하거나, 
+CSS를 최적화하거나, [npm](https://npmjs.org/) 모듈을 빌드하거나, 
+또는 소스 맵을 생성하는 것과 같은)를 수행하고, 애플리케이션에서 사용되는 패키지를 가져와서, 
+독자적으로 실행가능한 상태의 애플리케이션 번들로 출력한다. 개발 모드에서 이 과정 모두가 
+반응형으로 동작해서, 어떤 파일을 수정하면 즉시 브라우저에서 그 변경효과를 볼 수 있다. 
+이것은 생각보다 훨씬 쉬우면서도 또한 확장가능하기도 하다: 
+애플리케이션에 빌드 플러그인 패키지를 추가하면 새로운 언어와 컴파일러에 대한 지원을 추가할 수 있다.
+
+미티어 패키지 시스템의 핵심 아이디어는 _모든 것이 브라우저와 서버에서 동일하게 작동해야 한다_는 것이다
+(물론 의미있는 경우에 한해서 말이다: 브라우저는 메일을 보낼 수 없고, 서버는 마우스 이벤트를 가로챌 수 없다). 
+우리의 에코시스템은 이를 지원하기 위해서 바닥에서부터 작성되었다.
 
 {{/markdown}}
 </template>
@@ -64,96 +50,76 @@ to support this.
 <template name="structure">
 {{#markdown}}
 
-<h2 id="structuringyourapp">Structuring your application</h2>
+<h2 id="structuringyourapp">애플리케이션 구성하기</h2>
 
-A Meteor application is a mix of JavaScript that runs inside a client web
-browser, JavaScript that runs on the Meteor server inside a
-[Node.js](http://nodejs.org/) container, and all the supporting HTML fragments,
-CSS rules, and static assets.  Meteor automates the packaging and transmission
-of these different components.  And, it is quite flexible about how you choose
-to structure those components in your file tree.
+미티어 애플리케이션은 클라이언트 웹 브라우저 내부에서 실행되는 JavaScript, 
+미티어 서버의 [Node.js](http://nodejs.org/) 컨테이너 내부에서 실행되는 JavaScript, 
+그리고 모든 HTML 요소들, CSS 규칙, 그리고 정적 자원의 모음이다. 
+미티어는 이 다양한 구성요소들의 패키징과 전송을 자동화한다. 
+그리고 이 요소들을 애플리케이션의 파일 구조로 구성하는 방법에 있어 아주 유연하다.
 
-The only server assets are JavaScript and files in the `private` subdirectory.
-Meteor gathers all your JavaScript
-files, excluding anything under the `client`, `public`, and `private`
-subdirectories, and loads them into a Node.js
-server instance inside a fiber.  In Meteor, your server code runs in
-a single thread per request, not in the asynchronous callback style
-typical of Node.  We find the linear execution model a better fit for
-the typical server code in a Meteor application.
+유일한 서버 자원은 `private` 서브디렉토리에 있는 JavaScript와 파일들이다. 
+미티어는 모든 JavaScript 파일들을 모으되 `client`, `public`, 
+그리고 `private` 서브디렉토리에 있는 것은 제외한 다음 fiber 내부에서 Node.js 서버 인스턴스로 로드한다. 
+미티어에서, 서버 코드는 Node의 전형적인 비동기 콜백 스타일이 아닌 request 단위의 단일 쓰레드 상태로 실행된다. 
+이러한 선형 실행 모델이 미티어 애플리케이션의 전형적인 서버 코드에 더 적합하다.
 
-Meteor gathers any files under the `private` subdirectory and makes the contents
-of these files available to server code via the [`Assets`](#assets) API. The
-`private` subdirectory is the place for any files that should be accessible to
-server code but not served to the client, like private data files.
+미티어는 `private` 서브디렉토리의 모든 파일들을 모아서 이 파일들의 콘텐츠를 
+[`Assets`](#assets) API를 통해서 서버 코드에서 이용할 수 있게 한다. 
+이 `private` 서브디렉토리는 비공개 데이터 파일같은, 서버 코드에는 제공되지만 
+클라이언트에는 제공되지 않는 파일들을 위한 장소이다.
 
-There are more assets to consider on the client side.  Meteor
-gathers all JavaScript files in your tree, with the exception of
-the `server`, `public`, and `private` subdirectories, for the
-client.  It minifies this bundle and serves it to each new client.
-You're free to use a single JavaScript file for your entire application, or
-create a nested tree of separate files, or anything in between.
+클라이언트에서 고려해야 할 더 많은 자원들이 있다. 미티어는 `server`, `public`, 
+그리고 `private` 서브디렉토리에 있는 파일들을 제외한 모든 JavaScript 파일들을 클라이언트용으로 모은다. 
+그리고 이들을 최소화(minify)하여 번들 형태로 각 클라이언트에 보낸다. 여러분은 애플리케이션 전체를 
+하나의 JavaScript 파일에 작성할 수도 있고 여러 파일로 나누어 다층 디렉토리의 트리 형태로 만들 수도 있다.
 
-Some JavaScript libraries only work when placed in the
-`client/compatibility` subdirectory.  Files in this directory are
-executed without being wrapped in a new variable scope.  This means
-that each top-level `var` defines a global variable. In addition,
-these files are executed before other client-side JavaScript files.
+일부 JavaScript 라이브러리는 `client/compatibility` 서브디렉토리에 있을 때에 한하여 작동한다. 
+이 디렉토리에 있는 파일들은 새로운 변수 영역(variable scope)으로 감싸지 않은 상태로 실행된다. 
+이것은 각 파일의 상단의 `var`은 전역변수를 정의한다는 것을 의미한다. 
+추가로 이 파일들은 다른 클라이언트 영역의 JavaScript 파일들보다 먼저 실행된다.
 
-Files outside the `client`, `server` and `tests` subdirectories are loaded on
-both the client and the server!  That's the place for model definitions and
-other functions.  Meteor provides the variables [`isClient`](#meteor_isclient) and
-[`isServer`](#meteor_isserver) so that your code can alter its behavior depending
-on whether it's running on the client or the server. (Files in directories named
-`tests` are not loaded anywhere.)
+`client`, `server` 그리고 `tests` 서브디렉토리에 있지 않은 파일들은 클라이언트와 
+서버 양쪽에서 로드된다! 여기는 모델 정의와 기타 다른 기능을 처리하는 파일들이 자리하는 곳이다. 
+미티어가 제공하는 변수 [`isClient`](#meteor_isclient)와 [`isServer`](#meteor_isserver)를 
+이용하면 코드가 클라이언트나 또는 서버에서 실행될 지에 대한 선택을 할 수 있다. 
+(`tests` 디렉토리에 있는 파일들은 어느 쪽에도 로드되지 않는다.)
 
-Any sensitive code that you don't want served to the client, such as code
-containing passwords or authentication mechanisms, should be
-kept in the `server` directory.
+비밀번호를 담을 코드나 인증 메카니즘과 같은, 클라이언트에 제공되면 안되는 민감한 코드들은 
+`server` 디렉토리에 있어야 한다.
 
-CSS files are gathered together as well: the client will get a bundle with all
-the CSS in your tree (excluding the `server`,
-`public`, and `private` subdirectories).
+CSS 파일들도 함께 모아진다: 클라이언트가 (`server`, `public`, 그리고 `private` 서브디렉토리는 
+제외하고) 파일 트리에 있는 모든 CSS를 모아서 번들로 만든다.
 
-In development mode, JavaScript and CSS files are sent individually to make
-debugging easier.
+개발 모드에서는 디버깅을 보다 쉽게 하도록 JavaScript, CSS 파일들을 합치지 않고 개별적으로 보낸다.
 
-HTML files in a Meteor application are treated quite a bit differently
-from a server-side framework.  Meteor scans all the HTML files in your
-directory for three top-level elements: `<head>`, `<body>`, and
-`<template>`.  The head and body sections are separately concatenated
-into a single head and body, which are transmitted to the client on
-initial page load.
+미티어 앱에서 HTML 파일들은 서버 기반의 프레임워크에서와는 아주 약간 다른 방식으로 처리된다. 
+미티어는 디렉토리에 있는 모든 HTML 파일들을 읽어 3개의 엘리먼트를 찾는다: `<head>`, `<body>`, 
+그리고 `<template>`. 이 때, head와 body 섹션은 각각 단일의 head와 body로 합쳐지고 클라이언트 쪽으로 
+처음 페이지를 로드할 때 전송된다.
 
-Template sections, on the other hand, are converted into JavaScript
-functions, available under the `Template` namespace.  It's
-a really convenient way to ship HTML templates to the client.
-See the [templates](#livehtmltemplates) section for more.
+한편, Template 섹션은 JavaScript 함수로 변환되어 `Template` 네임스페이스 아래서 
+이용가능한 상태가 된다. 이것은 HTML 템플릿을 클라이언트로 보내는 정말 편리한 방식이다. 
+자세한 내용은 [templates](#livehtmltemplates) 섹션을 참조하라.
 
-Lastly, the Meteor server will serve any files under the `public` directory.
-This is the place for images, `favicon.ico`, `robots.txt`, and anything else.
+마지막으로, 미티어 서버는 `public` 디렉토리의 모든 파일들을 처리한다. 이 디렉토리는 이미지 파일, 
+favicon.ico, robots.txt, 그리고 기타 다른 파일들이 자리하는 곳이다.
 
-It is best to write your application in such a way that it is
-insensitive to the order in which files are loaded, for example by
-using [Meteor.startup](#meteor_startup), or by moving load order
-sensitive code into [packages](#usingpackages), which can explicitly control both
-the load order of their contents and their load order with respect to
-other packages. However sometimes load order dependencies in your
-application are unavoidable. The JavaScript and CSS files in an
-application are loaded according to these rules:
+애플리케이션을 작성함에 있어 파일들이 로드되는 순서에 민감하지 않게 작성하는 것이 최선이다. 
+예를 들면 [Meteor.startup](#meteor_startup)을 사용하거나, 혹은 로드 순서에 민감한 코드를 
+파일의 로드 순서와 다른 패키지에 상대적인 로드 순서를 모두 명시적으로 제어할 수 있는 
+[packages](#usingpackages)로 옮기는 방식이 있다. 
+그런데 때로는 로드 순서에 의존할 수 밖에 없는 경우가 있다. 
+애플리케이션에서 JavaScript와 CSS파일들은 다음의 규칙에 따라서 로드된다:
 
-* Files in subdirectories are loaded before files in parent directories, so that
-  files in the deepest subdirectory are loaded first, and files in the root
-  directory are loaded last.
 
-* Within a directory, files are loaded in alphabetical order by
-  filename.
+* 서브디렉토리에 있는 파일들은 그 상위 디렉토리에 있는 파일들보다 먼저 로드된다. 그래서 가장 하위의 서브디렉토리에 있는 파일들이 가장 먼저 로드된다. 그리고 루트 디렉토리에 있는 파일들이 가장 나중에 로드된다.
 
-* After sorting as described above, all files under directories named `lib` are
-  moved before everything else (preserving their order).
+* 디렉토리 내부에서 파일들은 파일명의 알파벳 순서에 따라서 로드된다.
 
-* Finally, all files that match `main.*` are moved after everything else
-  (preserving their order).
+* 위에서 기술된 내용에 따라서 정렬된 후, `lib`라는 이름을 가진 디렉토리들에 있는 파일들이 (그 순서를 유지하면서) 그 밖의 다른 파일들보다 앞 순서로 이동한다.
+
+* 마지막으로 `main.*`와 일치하는 파일들이 (그 순서를 유지하면서) 그 밖의 모든 파일들의 뒤에 자리한다.
 
 {{/markdown}}
 </template>
@@ -161,40 +127,32 @@ application are loaded according to these rules:
 <template name="data_">
 {{#markdown}}
 
-<h2 id="dataandsecurity">Data and security</h2>
+<h2 id="dataandsecurity">데이터와 보안</h2>
 
-Meteor makes writing distributed client code as simple as talking to a
-local database.  It's a clean, simple, and secure approach that obviates
-the need to implement individual RPC endpoints, manually cache data on
-the client to avoid slow roundtrips to the server, and carefully
-orchestrate invalidation messages to every client as data changes.
+미티어에서 분산된 클라이언트 코드를 작성하는 것은 로컬 데이터베이스 작업을 하는 것처럼 간편하다. 
+이것은 깔끔하고 단순하며 안전한 접근법으로서, 개별 RPC 엔드포인트들을 구축하고, 
+서버와의 느린 통신을 피하기 위해서 클라이언트에 데이터를 수동으로 캐시하고, 
+그리고 데이터의 변경시에 모든 클라이언트에 무효화 메시지를 조심스럽게 조정하는 등의 작업을 
+하지 않아도 되게 한다.
 
-In Meteor, the client and server share the same database API.  The same
-exact application code &mdash; like validators and computed properties &mdash; can
-often run in both places.  But while code running on the server has
-direct access to the database, code running on the client does *not*.
-This distinction is the basis for Meteor's data security model.
+미티어에서 클라이언트와 서버는 동일한 데이터베이스 API를 공유한다. 똑같은 애플리케이션 
+코드 — 유효성 검사 모듈과 계산된 속성들 같은 — 가 종종 양쪽에서 실행될 수 있다. 
+그러나 서버에서 실행되는 코드가 데이터베이스에 직접 접속하는 반면, 
+클라이언트에서 실행되는 코드는 *그렇지 않다*. 이 차이가 미티어의 데이터 보안 모델의 기반이다.
 
 {{#note}}
-By default, a new Meteor app includes the `autopublish` and `insecure`
-packages, which together mimic the effect of each client having full
-read/write access to the server's database.  These are useful
-prototyping tools, but typically not appropriate for production
-applications.  When you're ready, just remove the packages.
+새 미티어 앱의 초기 설정상태는 `autopublish`와 `insecure` 패키지를 포함하고 있다. 
+이 두 패키지는 각 클라이언트에게 서버의 데이터베이스에 전체 쓰기/읽기 접근 권한을 주는 효과를 낸다. 
+이들은 프로토타이핑 도구로서는 유용하지만 실 제품용 애플리케이션에는 적합하지 않다. 
+준비가 되면 이 패키지들을 제거하라.
 {{/note}}
 
-Every Meteor client includes an in-memory database cache.  To manage the
-client cache, the server *publishes* sets of JSON documents, and the
-client *subscribes* to those sets.  As documents in a set change, the
-server patches each client's cache.
+모든 미티어 클라이언트에는 인메모리 데이터베이스 캐시가 있다. 이 클라이언트 캐시를 다루기 위해서 
+서버는 JSON 도큐먼트 집합을 *발행(publish)한다*. 그리고 클라이언트는 이 집합을 *구독(subscribe)한다*. 
+이 집합에 있는 도큐먼트들이 변경되면 서버는 각 클라이언트의 캐시를 수정한다.
 
-Today most Meteor apps use MongoDB as their database because it is the
-best supported, though support for other databases is coming in the
-future. The
-[`Meteor.Collection`](http://docs.meteor.com/#meteor_collection) class
-is used to declare Mongo collections and to manipulate them. Thanks to
-`minimongo`, Meteor's client-side Mongo emulator, `Meteor.Collection`
-can be used from both client and server code.
+오늘날 대부분의 미티어 앱은 MongoDB를 데이터베이스로 사용하는데 이는 가장 잘 지원되기 때문이며, 
+다른 데이터베이스는 가까운 미래에 지원될 것이다.  [`Meteor.Collection`](http://docs.meteor.com/#meteor_collection) 클래스는 Mongo collection을 선언하고 이를 조작하는 데 사용된다. 미티어의 클라이언트에서 사용되는 Mongo 에뮬레이터인 `minimongo` 덕분에 `Meteor.Collection`은 클라이언트와 서버 양쪽에서 모두 사용될 수 있다.
 
     // declare collections
     // this code should be included in both the client and the server
@@ -208,10 +166,10 @@ can be used from both client and server code.
     Messages.insert({text: "Hello world", room: myRooms[0]._id});
     Parties.insert({name: "Super Bowl Party"});
 
-Each document set is defined by a publish function on the server.  The
-publish function runs each time a new client subscribes to a document
-set.  The data in a document set can come from anywhere, but the common
-case is to publish a database query.
+각 도큐먼트 집합은 서버에서 publish 함수로 정의한다. 이 publish 함수는 새로운 클라이언트가 
+도큐먼트 집합을 구독(subscribe)하는 시점마다 실행된다. 도큐먼트 집합의 데이터는 
+어떤 방식으로 만들어 질 수도 있지만, 기장 일반적인 방식은 데이터베이스 쿼리를 발행(publish)하는 
+방식으로 만들어진다.
 
     // server: publish all room documents
     Meteor.publish("all-rooms", function () {
@@ -231,15 +189,14 @@ case is to publish a database query.
                                  {owner: this.userId}]});
     });
 
-Publish functions can provide different results to each client.  In the
-last example, a logged in user can only see `Party` documents that
-are public, that the user owns, or that the user has been invited to.
+발행(publish) 함수는 각 클라이언트마다 다른 결과를 제공할 수도 있다. 마지막 예를 보면, 
+로그인 사용자는 전체 `Party` 도큐먼트들 중에서 공개적이거나, 해당 사용자 소유이거나, 
+초대자 명단에 있는 사용자인 도큐먼트들만 볼 수 있다.
 
-Once subscribed, the client uses its cache as a fast local database,
-dramatically simplifying client code.  Reads never require a costly
-round trip to the server.  And they're limited to the contents of the
-cache: a query for every document in a collection on a client will only
-return documents the server is publishing to that client.
+일단 구독(subscribe)을 하면, 클라이언트는 그 캐시를 빠른 로컬 데이터베이스처럼 사용할 수 있어, 
+클라이언트 코드를 극적으로 단축한다. Read 요청은 서버에 갔다오는 작업을 요구하지 않는다. 
+그리고 이 요청은 캐시에 있는 콘텐츠에 한정된다: 클라이언트에서 collection에 대한 모든 도큐먼트의 
+쿼리는 서버가 클라이언트에 발행한 도큐먼트만을 리턴한다.
 
     // client: start a parties subscription
     Meteor.subscribe("parties");
@@ -247,16 +204,14 @@ return documents the server is publishing to that client.
     // client: return array of Parties this client can read
     return Parties.find().fetch(); // synchronous!
 
-Sophisticated clients can turn subscriptions on and off to control how
-much data is kept in the cache and manage network traffic.  When a
-subscription is turned off, all its documents are removed from the cache
-unless the same document is also provided by another active
-subscription.
+수준높은 클라이언트라면 캐시에 저장되는 데이터 크기를 제어하고 
+네트워크 트래픽을 관리하기 위해서 구독을 껐다 켰다 할 수 있다. 
+구독이 꺼지면 활성화된 또 다른 구독이 없다면 모든 도큐먼트가 캐시에서 제거된다.
 
-When the client *changes* one or more documents, it sends a message to
-the server requesting the change.  The server checks the proposed change
-against a set of allow/deny rules you write as JavaScript functions.
-The server only accepts the change if all the rules pass.
+클라이언트가 하나 이상의 도큐먼트를 *수정하면*, 미티어는 서버에게 변경 요청 메시지를 보낸다. 
+서버는 요청을 받아서 여러분이 JavaScript 함수로 작성한 allow/deny 규정에 의거하여 검사한다.
+서버는 이 모든 규정을 통과한 변경 요청만을 받아들인다.
+
 
     // server: don't allow client to insert a party
     Parties.allow({
@@ -269,70 +224,54 @@ The server only accepts the change if all the rules pass.
     var party = { ... };
     Parties.insert(party);
 
-If the server accepts the change, it applies the change to the database
-and automatically propagates the change to other clients subscribed to
-the affected documents.  If not, the update fails, the server's database
-remains untouched, and no other client sees the update.
+서버가 그 변경요청을 수용하면, 데이터베이스에 그 변경내용을 반영하고 연관된 도큐먼트들을 구독하는 
+모든 클라이언트들에게 그 변경내용을 자동으로 전파한다. 서버가 수용하지 않으면, 변경은 실패하고, 
+서버의 데이터베이스는 그대로 남아있고 다른 클라이언트들은 그 변경과정을 알지 못한다.
 
-Meteor has a cute trick, though.  When a client issues a write to the
-server, it also updates its local cache immediately, without waiting for
-the server's response.  This means the screen will redraw right away.
-If the server accepted the update &mdash; what ought to happen most of the
-time in a properly behaving client &mdash; then the client got a jump on the
-change and didn't have to wait for the round trip to update its own
-screen.  If the server rejects the change, Meteor patches up the
-client's cache with the server's result.
+미티어에는 영리한 재주가 또 있다. 클라이언트가 서버에 변경 요청을 보낼 때, 
+서버로부터의 반응을 기다리지 않고, 로컬 캐시를 즉시 변경한다. 
+이는 화면이 바로 다시 그려진다는 것을 의미한다. 
+만약 서버가 그 변경 — 정상적인 클라이언트에서 대부분의 경우 당연히 진행될 변경 — 을 수용했다면 
+클라이언트는 화면을 변경하기 위해서 서버에 갔다오는 시간을 기다릴 필요가 없는 것이다. 
+만약 서버가 그 변경을 거절하면, 미티어는 서버의 그 리턴 결과를 클라이언트의 캐시에 반영한다.
 
-Putting it all together, these techniques accomplish latency
-compensation.  Clients hold a fresh copy of the data they need, and
-never need to wait for a roundtrip to the server. And when clients
-modify data, those modifications can run locally without waiting for the
-confirmation from the server, while still giving the server final say
-over the requested change.
+이 과정 전체를 합친 기술이 대기시간 보정(latency compensation)이다. 클라이언트는 
+필요한 데이터의 복제본을 가지고 있어, 서버에 다녀오는 시간을 기다릴 필요가 없다. 그리고 
+클라이언트가 데이터를 수정할 때, 그 수정 작업은 서버로부터의 확인을 기다리지 않고 
+로컬에서 실행될 수 있다. 그리고 서버에게는 요청한 변경에 대한 답변의 기회를 주고 있다.
+
 
 {{#note}}
-The current release of Meteor supports MongoDB, the popular document
-database, and the examples in this section use the
-        [MongoDB API](http://www.mongodb.org/display/DOCS/Manual).  Future
-releases will include support for other databases.
+미티어의 현재 버전은 유명한 도큐먼트 기반의 데이터베이스인 MongoDB를 지원한다. 
+그리고 이 섹션의 예제는 [MongoDB API](http://www.mongodb.org/display/DOCS/Manual)를 이용한다. 
+미래 버전에서는 다른 데이터베이스에 대한 지원이 포함될 것이다.
 {{/note}}
 
-<h3 id="dataandsecurity-authentication">Authentication and user accounts</h3>
+<h3 id="dataandsecurity-authentication">인증과 사용자 계정</h3>
 
-Meteor includes [Meteor Accounts](#accounts_api), a state-of-the-art
-authentication system. It features secure password login using the
-[bcrypt](http://en.wikipedia.org/wiki/Bcrypt) algorithm,
-and integration with external services including Facebook, GitHub,
-Google, Meetup, Twitter, and Weibo. Meteor Accounts defines a
-[`Meteor.users`](#meteor_users) collection where developers can store
-application-specific user data.
+미티어에는 Meteor Accounts가 들어있는데, 이는 최신의 인증 시스템이다. 
+이것은 [bcrypt](http://en.wikipedia.org/wiki/Bcrypt) 알고리즘을 이용한 암호화된 비밀번호 로그인 기능과 
+페이스북, 깃허브, 구글, 밋업, 트위터, 그리고 웨이보를 포함하는 외부 서비스와의 연동기능을 특징으로 한다. 
+Meteor Accounts는 개발자가 추가 사용자 정보를 저장할 수 있는 [`Meteor.users`](#meteor_users) 컬렉션을 정의한다.
 
-Meteor also includes pre-built forms for common tasks like login, signup,
-password change, and password reset emails. You can add [Accounts
-UI](#accountsui) to your app with just one line of code. The `accounts-ui` package even provides a configuration wizard that walks you through the steps to
-set up the external login services you're using in your app.
+미티어는 또한 로그인, 회원가입, 비밀번호 변경, 비밀번호 리셋 메일과 같은 공통의 기능을 위한 빌트인 폼을 포함하고 있다. 
+단 한 줄의 코드로 앱에 [Accounts UI](#accountsui)를 추가할 수 있다. `accounts-ui` 패키지는 
+설정 마법사도 제공하여 앱에서 사용할 외부 로그인 서비스 설정을 단계별로 할 수 있도록 하고 있다.
 
-<h3 id="dataandsecurity-validation">Input validation</h3>
+<h3 id="dataandsecurity-validation">입력 유효성 검사</h3>
 
-Meteor allows your methods and publish functions to take arguments of any
-[JSON](http://json.org/) type. (In fact, Meteor's wire protocol supports
-[EJSON](#ejson), an extension of JSON which also supports other common types
-like dates and binary buffers.) JavaScript's dynamic typing means you don't need
-to declare precise types of every variable in your app, but it's usually helpful
-to ensure that the arguments that clients are passing to your methods and
-publish functions are of the type that you expect.
+미티어에서는 직접 작성하는 메서드와 발행 함수가 어떤 [JSON](http://json.org/) 형식의 매개변수라도 수용한다. 
+(사실, 미티어의 접속 프로토콜은 EJSON을 지원하는데 이는 날짜, 이진 버퍼같은 다른 일반적인 형식도 지원한다.) 
+JavaScript의 동적 타이핑은 앱에서 모든 변수의 형식을 정확하게 지정하지 않아도 된다는 것을 의미하지만, 
+클라이언트가 메서드와 발행 함수에 전달하는 매개변수가 원하는 형식이라는 것을 확실하게 해 두는 것이 바람직하다.
 
-Meteor provides a [lightweight library](#match) for checking that arguments and
-other values are the type you expect them to be. Simply start your functions
-with statements like `check(username, String)` or
-`check(office, {building: String, room: Number})`. The `check` call will
-throw an error if its argument is of an unexpected type.
+미티어는 매개변수와 기타 값들이 원래 기대했던 형식인지를 검사하는 [경량 라이브러리](#match)를 제공한다. 
+단순히 함수를 정의할 때, `check(username, String)`나 `check(office, {building: String, room: Number})`와 같은 
+문장으로 시작하라. 이 `check' 호출은 매개변수가 기대했던 형식이 아니면 오류를 발생시킬 것이다.
 
-Meteor also provides an easy way to make sure that all of your methods
-and publish functions validate all of their arguments. Just run
-<code>meteor add [audit-argument-checks](#auditargumentchecks)</code> and any
-method or publish function which skips `check`ing any of its arguments will fail
-with an exception.
+미티어는 또한 모든 메서드와 발행 함수들이 그 매개변수의 유효성을 검사하는 쉬운 방법을 제공한다. 
+그저 <code>meteor add [audit-argument-checks](#auditargumentchecks)</code>를 실행하면 
+어떤 메서드나 발행 함수가 매개변수에 대하여 `check` 함수 적용을 빠트렸을 때 예외를 발생시키면서 오류를 낼 것이다.
 
 {{/markdown}}
 </template>
@@ -340,66 +279,55 @@ with an exception.
 <template name="reactivity">
 {{#markdown}}
 
-<h2 id="reactivity">Reactivity</h2>
+<h2 id="reactivity">반응성(Reactivity)</h2>
 
-Meteor embraces the concept of [reactive
-programming](http://en.wikipedia.org/wiki/Reactive_programming). This means that
-you can write your code in a simple imperative style, and the result will be
-automatically recalculated whenever data changes that your code depends on.
+미티어는 [반응형 프로그래밍](http://en.wikipedia.org/wiki/Reactive_programming)의 개념을 담고 있다. 
+이 의미는 단순 명령형 프로그래밍 스타일로 코드를 작성하여도, 그 결과는 그 코드와 연관된 데이터가 변경될 때마다 
+자동으로 재계산된다는 것을 의미한다.
 
     Tracker.autorun(function () {
       Meteor.subscribe("messages", Session.get("currentRoomId"));
     });
 
-This example (taken from a chat room client) sets up a data
-subscription based on the session variable `currentRoomId`.
-If the value of `Session.get("currentRoomId")` changes for any reason, the
-function will be automatically re-run, setting up a new subscription that
-replaces the old one.
+(채팅방 클라이언트에서 추출된) 이 예제는 세션변수 `currentRoomId`에 따라서 데이터 구독을 설정한다. 
+어떤 이유로 `Session.get("currentRoomId")`의 값이 변경되면 이 함수는 자동으로 재실행되어 
+이전 값을 대체하는 새로운 구독을 설정한다.
 
-This automatic recomputation is achieved by a cooperation between
-`Session` and `Tracker.autorun`.  `Tracker.autorun` performs an arbitrary "reactive
-computation" inside of which data dependencies are tracked, and it
-will re-run its function argument as necessary.  Data providers like
-`Session`, on the other hand, make note of the computation they are
-called from and what data was requested, and they are prepared to send
-an invalidation signal to the computation when the data changes.
+이런 자동 재계산은 `Session`와 `Tracker.autorun` 사이의 협동 작업으로 이루어진다. 
+`Tracker.autorun`은 데이터 의존성이 연관된 것 내부에서 임의의 "반응형 계산"을 수행한다. 
+그리고 필요한 경우 그 함수의 매개변수를 재실행한다. 한편, `Session`과 같이 데이터를 제공하는 쪽은 
+그들을 호출하는 대상과 어떤 데이터가 요청되는 지를 주목하고 있다가 
+데이터가 변경될 때 계산하는 쪽으로 무효화 신호를 보낼 준비를 한다.
 
-This simple pattern (reactive computation + reactive data source) has wide
-applicability.  Above, the programmer is saved from writing
-unsubscribe/resubscribe calls and making sure they are called at the
-right time.  In general, Meteor can eliminate whole classes of data
-propagation code which would otherwise clog up your application with
-error-prone logic.
+이런 단순 패턴(반응형 계산 + 반응형 데이터 소스)은 폭넓게 적용되고 있다. 위에서 프로그래머는 
+unsubscribe/resubscribe 호출을 작성하지 않아도 되고 이들이 적시에 호출되는 지를 확인할 필요도 없다. 
+일반적으로, 미티어는 오류를 내기 쉬운 로직으로 애플리케이션을 버벅이게 할 지도 모르는 
+데이터 전파 코드의 모든 클래스를 제거할 수 있다.
 
-These Meteor functions run your code as a reactive computation:
+이 미티어 함수들은 작성한 코드를 반응형 계산으로 실행한다:
 
 * [Templates](#livehtmltemplates)
 * [`Tracker.autorun`](#tracker_autorun)
-* [`Blaze.render`](#blaze_render) and [`Blaze.renderWithData`](#blaze_renderwithdata)
+* [`Blaze.render`](#blaze_render)와 [`Blaze.renderWithData`](#blaze_renderwithdata)
 
-And the reactive data sources that can trigger changes are:
+그리고 변경되어 자동 재실행을 유발하는 반응형 데이터 소스들은 다음과 같다:
 
-* [`Session`](#session) variables
-* Database queries on [Collections](#find)
+* [`Session`](#session) 변수
+* [Collections](#find)에 대한 데이터베이스 쿼리
 * [`Meteor.status`](#meteor_status)
-* The `ready()` method on a [subscription handle](#meteor_subscribe)
+* [subscription handle](#meteor_subscribe)에서의 `ready()` 메서드
 * [`Meteor.user`](#meteor_user)
 * [`Meteor.userId`](#meteor_userid)
 * [`Meteor.loggingIn`](#meteor_loggingin)
 
-In addition, the following functions which return an object with a
-`stop` method, if called from a reactive computation, are stopped when
-the computation is rerun or stopped:
+추가로, `stop` 메서드를 가진 객체를 리턴하는 다음의 함수들은, 반응형 계산에서 호출되는 경우, 
+그 계산이 재실행되거나 중단될 때, 중단된다:
 
 * [`Tracker.autorun`](#tracker_autorun) (nested)
 * [`Meteor.subscribe`](#meteor_subscribe)
-* [`observe()`](#observe) and [`observeChanges()`](#observe_changes) on cursors
+* 커서에서의 [`observe()`](#observe)와 [`observeChanges()`](#observe_changes)
 
-Meteor's
-[implementation](https://github.com/meteor/meteor/blob/master/packages/tracker/tracker.js)
-is a package called [`Tracker`](#tracker) that is fairly short and straightforward.
-You can use it yourself to implement new reactive data sources.
+미티어에서는 [`Tracker`](#tracker)라는 이름의 package로 [구현](https://github.com/meteor/meteor/blob/master/packages/tracker/tracker.js)하였는데 이는 매우 짧고 간결하다. 이를 사용하여 직접 새로운 반응형 데이터 소스를 구축할 수도 있다.
 
 {{/markdown}}
 </template>
