@@ -6,54 +6,48 @@ not here -->
 
 {{#markdown}}
 
-<b>_Meteor is an ultra-simple environment for building modern websites.
-What once took weeks, even with the best tools, now takes hours with
-Meteor._</b>
+<b>_미티어(Meteor)는 현재의 웹사이트 구축을 위한 초간단 개발환경이다. 
+한 때, 최고의 개발도구를 이용해도, 수 주가 걸릴 일이라도 이제 미티어로 수 시간이면 된다._</b>
 
-The web was originally designed to work in the same way that mainframes
-worked in the 70s.  The application server rendered a screen and sent it
-over the network to a dumb terminal. Whenever the user did anything,
-that server rerendered a whole new screen. This model served the Web
-well for over a decade. It gave rise to LAMP, Rails, Django, PHP.
+웹은 원래 1970년대에 메인프레임이 작동하는 방식과 동일한 방식으로 작동하도록 설계되었다. 
+애플리케이션 서버는 화면을 그리고 이 화면을 네트워크를 통해 더미 터미널로 전송한다. 
+이용자가 무슨 작업을 할 때마다, 이 서버는 전체 화면을 다시 그린다. 
+이 모델로 웹은 10년 동안 잘 해왔다. 그리고 이로부터 LAMP, Rails, Django, PHP가 등장했다.
 
-But the best teams, with the biggest budgets and the longest schedules,
-now build applications in JavaScript that run on the client.  These apps
-have stellar interfaces.  They don't reload pages.  They are reactive:
-changes from any client immediately appear on everyone's screen.
+그러나 이제는 최고의 개발팀들이 가장 많은 예산과 가장 긴 일정으로 
+클라이언트에서 실행되는 애플리케이션들을 JavaScript로 구축한다. 
+이 앱들은 멋진 인터페이스를 가지고 있다. 화면을 리로드하지도 않는다. 
+이들은 반응형이다: 어떤 클라이언트에서 변경이 발생하면 모든 이용자의 화면에 즉각 반영된다.
 
-They've built them the hard way.  Meteor makes it an order of
-magnitude simpler, and a lot more fun.  You can build a complete
-application in a weekend, or a sufficiently caffeinated hackathon.  No
-longer do you need to provision server resources, or deploy API
-endpoints in the cloud, or manage a database, or wrangle an ORM layer,
-or swap back and forth between JavaScript and Ruby, or broadcast data
-invalidations to clients.
+개발자들은 앱들을 힘들게 구축해왔다. 미티어를 사용하면 10배 정도는 더 쉽게, 그리고 재미있게 구축할 수 있다. 
+주말기간이면 또는 충분한 카페인이 제공되는 해커톤 행사 기간이면 완벽한 애플리케이션을 구축할 수 있다. 
+더 이상 서버 자원을 준비하거나, 클라우드에 API 종단을 배포하거나, 데이터베이스를 관리하거나, 
+ORM 계층에 대하여 논쟁하거나, JavaScript와 Ruby사이에서 갈팡질팡하거나, 
+클라이언트들에게 데이터의 유효성 불일치를 전파할 필요가 없다.
 
-Meteor is a work in progress, but we hope it shows the direction of
-our thinking.  We'd love to hear your feedback.
+Meteor는 현재 개발중인 상태이지만, 이것이 우리가 생각하는 바를 보여주기를 기대한다. 여러분의 피드백을 환영한다.
 
 
-## Quick start!
+## 바로 시작!
 
 <!-- change colors on these. $ and command output in grey, rest in
 white -->
 
-The following works on all [supported
-platforms](https://github.com/meteor/meteor/wiki/Supported-Platforms).
+다음은 모든 [지원되는 플랫폼](https://github.com/meteor/meteor/wiki/Supported-Platforms)에서 동작한다.
 
-Install Meteor:
+미티어를 설치한다:
 
 <pre>
 $ curl https://install.meteor.com | /bin/sh
 </pre>
 
-Create a project:
+프로젝트를 생성한다:
 
 <pre>
 $ meteor create myapp
 </pre>
 
-Run it locally:
+로컬에서 실행한다:
 
 <pre>
 $ cd myapp
@@ -61,79 +55,67 @@ $ meteor
 =&gt; Meteor server running on: http://localhost:3000/
 </pre>
 
-Unleash it on the world (on a free server we provide):
+세상에 보인다(우리가 제공하는 무료서버에):
 
 <pre>
 $ meteor deploy myapp.meteor.com
 </pre>
 
-<h2 id="sevenprinciples">Seven Principles of Meteor</h2>
+<h2 id="sevenprinciples">미티어의 7 원칙</h2>
 
 <!-- wire with [1,2,3] on it -->
-- _Data on the Wire_. Don't send HTML over the network. Send data and
-let the client decide how to render it.
+- _데이터만 전송(Data on the Wire)_. 네트워크로 HTML을 보내지 마라. 
+데이터만 보내고 그것을 화면에 그리는 것은 클라이언트가 하도록 하라.
 
 <!-- two people, one speech bubble coming out of both of their mouths,
 containing '{}' -->
-- _One Language._ Write both the client and the server parts of your
-interface in JavaScript.
+- _단일 언어(One Language)._ 인터페이스의 클라이언트와 서버 파트 모두를 JavaScript로 작성하라.
 
 <!-- globe, with the same database icon in US and Russia -->
-- _Database Everywhere_. Use the same transparent API to access your
-database from the client or the server.
+- _데이터베이스는 어디에서나(Database Everywhere)_. 클라이언트나 서버로부터 데이터베이스에 접근할 때 동일한 API를 사용하라.
 
 <!-- clock with zero time elapsed. or clock on left with zero time
 elapsed, horizontal bold line to a clock with zero time elapsed, but a
 line at a 45 degree angle to a a clock in grey with 100 ms
 elapsed. like shades of relativity -->
-- _Latency Compensation_. On the client, use prefetching and model
-simulation to make it look like you have a zero-latency connection to
-the database.
+- _대기시간 보정(Latency Compensation)_. 클라이언트에서 미리 가져오기와 모델 흉내내기(model simulation)를 사용하여 
+데이터베이스에 접속할 때 대기시간이 없는 것처럼 보이도록 한다.
 
 <!-- knee getting hit with hammer like in reflex test -->
-- _Full Stack Reactivity_. Make realtime the default. All layers, from
-database to template, should make an event-driven interface available.
+- _모든 기능을 가진 반응형(Full Stack Reactivity)_. 실시간 기능이 기본이 되게 하라. 
+데이터베이스에서 템플릿까지 전 계층에서 이벤트 기반의 인터페이스를 이용할 수 있어야 한다.
 
-- _Embrace the Ecosystem_. Meteor is open source and integrates,
-rather than replaces, existing open source tools and frameworks.
+- _에코시스템을 포용(Embrace the Ecosystem)_. 미티어는 오픈소스로서 기존의 오픈소스 도구와 프레임워크를 대체한다기 보다는 
+이들과 융합한다.
 
 <!-- zen circle -->
-- _Simplicity Equals Productivity_. The best way to make something
-seem simple is to have it actually _be_ simple. Accomplish this through
-clean, classically beautiful APIs.
+- _단순함이 곧 생산성(Simplicity Equals Productivity)_. 단순하게 보이도록 하는 최고의 방법은 실제로 _단순하게_ 만드는 것이다. 
+깔끔하고 아름다운 API를 사용하여 이렇게 만들어라.
 
 
-<h2 id="resources">Developer Resources</h2>
+<h2 id="resources">개발자 리소스</h2>
 
 <!-- https://github.com/blog/273-github-ribbons -->
 <a href="http://github.com/meteor/meteor"><img class="github-ribbon visible-desktop" style="position: absolute; top: 0; right: 0; border: 0;" src="/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 
-If anything in Meteor catches your interest, we hope you'll get involved
-with the project!
+미티어의 어느 부분이라도 여러분의 흥미를 끈다면, 프로젝트에 참여하기를 바란다!
 
 <dl class="involved">
 <dt><span>Stack Overflow</span></dt>
-<dd>The best place to ask (and answer!) technical questions is on <a href="http://stackoverflow.com/questions/tagged/meteor">Stack
-  Overflow</a>.  Be sure to add
-  the <code>meteor</code> tag to your question.
+<dd>기술적인 질문(그리고 답변!)을 하기에 최고의 장소는 <a href="http://stackoverflow.com/questions/tagged/meteor">Stack Overflow</a>이다. 질문에 <code>meteor</code> 태그를 꼭 추가하기 바란다.
 </dd>
 
-<dt><span>Mailing lists</span></dt>
+<dt><span>메일링 리스트</span></dt>
 <dd>
-  We have two mailing lists for Meteor.  <nobr><a href="http://groups.google.com/group/meteor-talk"><code>meteor-talk@googlegroups.com</code></a></nobr>
-  is for general questions, requests for help, and new project
-  announcements.
-  <nobr><a href="http://groups.google.com/group/meteor-core"><code>meteor-core@googlegroups.com</code></a></nobr>
-  is for coordinating changes to Meteor core packages and the build
-  tools.
+  미티어를 위한 두 개의 메일링 리스트가 있다. <nobr><a href="http://groups.google.com/group/meteor-talk"><code>meteor-talk@googlegroups.com</code></a></nobr>는 일반적인 질문, 도움 요청, 그리고 새로운 프로젝트 공지를 위한 것이다. <nobr><a href="http://groups.google.com/group/meteor-core"><code>meteor-core@googlegroups.com</code></a></nobr>는 미티어 core 패키지의 변경사항과 빌드 도구들을 조정하기 위한 것이다.
 </dd>
 
 <dt><span>GitHub</span></dt>
-<dd>The core code is on <a href="http://github.com/meteor/meteor">GitHub</a>.  If you're able to write code or file issues, we'd love to have your help.  Please read <a href="https://github.com/meteor/meteor/wiki/Contributing-to-Meteor">Contributing to Meteor</a> for how to get started.
+<dd>핵심 코드는 <a href="http://github.com/meteor/meteor">GitHub</a>에 있다. 여러분이 코드를 작성하거나 이슈를 작성할 수 있다면, 우리는 여러분의 도움을 기다린다. 여러분의 참여 방법은 <a href="https://github.com/meteor/meteor/wiki/Contributing-to-Meteor">Contributing to Meteor</a>를 참조하기 바란다.
 </dd>
 
-<dt><span>The Meteor Manual</span></dt>
-<dd>In-depth articles about the core components of Meteor can be found on the <a href="http://manual.meteor.com/">Meteor Manual</a>. The first article is about <a href="http://manual.meteor.com/#tracker">Tracker</a>, our transparent reactivity framework. More articles (covering topics like Blaze, Unibuild, and DDP) are coming soon!
+<dt><span>Meteor 매뉴얼</span></dt>
+<dd>Meteor의 핵심 요소에 대한 심층 문서는 <a href="http://manual.meteor.com/">Meteor Manual</a>에서 볼 수 있다. 그 첫 기사는 반응형 프레임워크인 <a href="http://manual.meteor.com/#tracker">Tracker</a>이다. (Blaze, Unibuild, 그리고 DDP와 같은 주제들을 다루는) 추가 기사들 곧 제공될 것이다!
 </dd>
 </dl>
 
