@@ -3,69 +3,53 @@
 
 ## `appcache`
 
-The `appcache` package stores the static parts of a Meteor application
-(the client side Javascript, HTML, CSS, and images) in the browser's
-[application cache](https://en.wikipedia.org/wiki/AppCache). To enable
-caching simply add the `appcache` package to your project.
+패키지 `appcache`는 미티어 애플리케이션의 정적 영역(클라이언트쪽의 Javascript, HTML, CSS, 그리고 이미지 파일들)을 
+브라우저의 [application cache](https://en.wikipedia.org/wiki/AppCache)에 저장한다. 
+캐시 기능을 활성화하려면 단순히 `appcache` 패키지를 프로젝트에 추가하면 된다.
 
-* Once a user has visited a Meteor application for the first time and
-  the application has been cached, on subsequent visits the web page
-  loads faster because the browser can load the application out of the
-  cache without contacting the server first.
+* 이용자가 미티어 앱을 처음 방문하면, 그리고 앱에 대한 캐시가 작동하면, 그 다음의 방문시에는 
+  웹 페이지 로딩 속도가 빨라지는데, 이는 브라우저가 서버에 먼저 접속하기 전에 캐시에서 앱을 로드하기 때문이다. 
+  
+* Hot code push는 앱이 계속 실행되는 동안에 백그라운드에서 브라우저에 의해서 로드된다. 새로운 코드가 온전하게 로드되면, 
+  브라우저는 새 코드로 재빨리 바꿔치기를 할 수 있다.
+  
+* 애플리케이션 캐시는 브라우저가 인터넷 연결이 끊어진 상태에서도 로드되도록 할 수 있어서, 오프라인 상태에서 앱을 구동할 수 
+  있게 한다.
+  
+(하지만 유의할 점은, `appcache` 패키지가  *data*를 오프라인 상태에서 이용할 수 있게 하지는 않는다는 것이다: 
+오프라인 상태에서 로드된 앱에서, 미티어 컬렉션은 인터넷 연결이 되어 브라우저가 DDP 접속을 할 수 있을 때까지는 
+클라이언트에서는 빈 상태로 나타난다.)
 
-* Hot code pushes are loaded by the browser in the background while the
-  app continues to run.  Once the new code has been fully loaded the
-  browser is able to switch over to the new code quickly.
+애플리케이션 캐시는 모든 브라우저에서 잘 작동하지만, Firefox는 예외이다. 이 브라우저에서는 
+"This website is asking to store data on your computer for offline use" 라는 팝업 메시지가 나타면서
+이 요청을 허용할 것인지 거부할 것인지를 묻는다. Firefox나 다른 브라우저에서 AppCache 기능을 끄기 위해서는 다음과 같이 하면 된다:
 
-* The application cache allows the application to be loaded even when
-  the browser doesn't have an Internet connection, and so enables using
-  the app offline.
-
-(Note however that the `appcache` package by itself doesn't make
-*data* available offline: in an application loaded offline, a Meteor
-Collection will appear to be empty in the client until the Internet
-becomes available and the browser is able to establish a DDP
-connection).
-
-The application cache works transparently in all supported browsers
-except for Firefox, which pops up a message saying "This website is
-asking to store data on your computer for offline use" and asks the
-user whether to allow or deny the request. To turn AppCache off for
-Firefox or other specific browsers use:
 
     Meteor.AppCache.config({
       chrome: false,
       firefox: false
     });
 
-The supported browsers that can be enabled or disabled include, but are
-not limited to, `android`, `chrome`, `chromium`, `chromeMobileIOS`,
-`firefox`, `ie`, `mobileSafari` and `safari`.
+활성화, 비활성화를 할 수 있는 브라우저에는 `android`, `chrome`, `chromium`, `chromeMobileIOS`,
+`firefox`, `ie`, `mobileSafari` 그리고 `safari`등이 있다.
 
-Browsers limit the amount of data they will put in the application
-cache, which can vary due to factors such as how much disk space is
-free.  Unfortunately if your application goes over the limit rather
-than disabling the application cache altogether and running the
-application online, the browser will instead fail that particular
-*update* of the cache, leaving your users running old code.
+브라우저는 애플리케이션 캐시에 넣을 수 있는 데이터의 크기를 제한하는데, 이 값은 이용가능한 디스크 공간의 크기와 같은 요소에 따라서 
+달라진다. 불행하게도 애플리케이션이 앱캐시를 비활성화하고 온라인에서 실행되지 않은 채로 이 크기 제한을 넘어서면, 
+브라우저는 캐시의 *갱신*에 실패하고, 예전 코드가 계속 실행된다.
 
-Thus it's best to keep the size of the cache below 5MB.  The
-`appcache` package will print a warning on the Meteor server console
-if the total size of the resources being cached is over 5MB.
+그러므로, 캐시의 크기를 5MB 이내로 유지하는 것이 최선이다. `appcache` 패키지는 캐시될 리소스의 총 크기가 
+5MB를 초과하면 미티어 서버 콘솔에 경고 메시지를 출력한다.
 
-If you have files too large to fit in the cache you can disable
-caching by URL prefix.  For example,
+만약 파일이 너무 큰 경우에는 URL prefix로 캐시를 비활성화할 수 있다. 예를 들면,
 
     Meteor.AppCache.config({onlineOnly: ['/online/']});
 
-causes files in your `public/online` directory to not be cached, and
-so they will only be available online.  You can then move your large
-files into that directory and refer to them at the new URL:
+이 코드는 `public/online` 디렉토리에 있는 파일들은 캐시가 되지 않도록 하므로 이 파일들은 
+온라인으로만 이용할 수 있다. 크기가 큰 파일은 이 디렉토리로 옮기고 새 URL을 부여한다:
 
     <img src="/online/bigimage.jpg">
 
-If you'd prefer not to move your files, you can use the file names
-themselves as the URL prefix:
+파일을 옮기는 것을 선호하지 않는다면, 파일명으로 URL prefix를 대체할 수 있다:
 
     Meteor.AppCache.config({
       onlineOnly: [
@@ -74,15 +58,12 @@ themselves as the URL prefix:
       ]
     });
 
-though keep in mind that since the exclusion is by prefix (this is a
-limitation of the application cache manifest), excluding
-`/largedata.json` will also exclude such URLs as
-`/largedata.json.orig` and `/largedata.json/file1`.
+주의할 사항은 이러한 배제는 prefix에 의한 것이라는 점이다 (이것이 앱 캐시의 한계이다). 
+`/largedata.json`를 배제하면 `/largedata.json.orig`와 `/largedata.json/file1` 같은 URL들도 
+배제된다.
 
-For more information about how Meteor interacts with the application
-cache, see the
-[AppCache page](https://github.com/meteor/meteor/wiki/AppCache)
-in the Meteor wiki.
+미티어가 앱캐시와 어떻게 상호작용을 하는 지에 대한 더 상세한 정보는 미티어 위키의 
+[AppCache page](https://github.com/meteor/meteor/wiki/AppCache) 페이지를 보기 바란다.
 
 {{/markdown}}
 </template>

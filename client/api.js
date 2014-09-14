@@ -2,21 +2,21 @@ Template.api.isClient = {
   id: "meteor_isclient",
   name: "Meteor.isClient",
   locus: "Anywhere",
-  descr: ["Boolean variable.  True if running in client environment."]
+  descr: ["Boolean 변수.  클라이언트 환경에서 실행되면 true."]
 };
 
 Template.api.isServer = {
   id: "meteor_isserver",
   name: "Meteor.isServer",
   locus: "Anywhere",
-  descr: ["Boolean variable.  True if running in server environment."]
+  descr: ["Boolean 변수.  서버 환경에서 실행되면 true."]
 };
 
 Template.api.startup = {
   id: "meteor_startup",
   name: "Meteor.startup(func)",
   locus: "Anywhere",
-  descr: ["Run code when a client or a server starts."],
+  descr: ["클라이언트나 서버가 구동될 때 코드를 실행한다."],
   args: [
     {name: "func",
      type: "Function",

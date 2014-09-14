@@ -3,10 +3,10 @@
 
 <h1 id="api">The Meteor API</h1>
 
-Your JavaScript code can run in two environments: the *client* (browser), and
-the *server* (a [Node.js](http://nodejs.org/) container on a server).  For each
-function in this API reference, we'll indicate if the function is available just
-on the client, just on the server, or *Anywhere*.
+여러분이 작성한 JavaScript 코드는 두 환경에서 실행될 수 있다: *클라이언트* (브라우저)와 
+*서버* (서버에 있는 [Node.js](http://nodejs.org/) 컨테이너). 아래의 API 레퍼런스에서 
+각 함수마다, 해당 함수가 클라이언트(client)에서만 작동하는 지, 서버(server)에서만 작동하는 지, 
+또는 *어디서나(Anywhere)* 작동하는 지가 표기된다.
 
 <h2 id="core"><span>Meteor Core</span></h2>
 
@@ -14,25 +14,21 @@ on the client, just on the server, or *Anywhere*.
 {{> autoApiBox "Meteor.isServer"}}
 
 {{#note}}
-`Meteor.isServer` can be used to limit where code runs, but it does not
-prevent code from being sent to the client. Any sensitive code that you
-don't want served to the client, such as code containing passwords or
-authentication mechanisms, should be kept in the `server` directory.
+`Meteor.isServer`는 코드가 실행되는 위치를 제한하는 데 사용된다. 하지만, 이것이 클라이언트로 
+코드를 보내는 것을 막지는 못한다. 비밀번호를 담고 있는 코드나 또는 인증 메카니즘과 같은, 
+클라이언트로 보내지면 안되는 민감한 코드는 `server` 디렉토리에 있어야 한다.
 {{/note}}
 
 
 {{> autoApiBox "Meteor.startup"}}
 
-On a server, the function will run as soon as the server process is
-finished starting. On a client, the function will run as soon as the DOM
-is ready.
+서버에서, 이 함수는 서버 프로세스가 시작 과정을 마치는 대로 바로 실행된다. 
+클라이언트에서, 이 함수는 DOM이 ready 상태가 되는 대로 바로 실행된다.
 
-The `startup` callbacks are called in the same order as the calls to
-`Meteor.startup` were made.
+`startup` 콜백은 `Meteor.startup`에 대한 호출이 이루어지는 순서과 같은 순서로 호출된다.
 
-On a client, `startup` callbacks from packages will be called
-first, followed by `<body>` templates from your `.html` files,
-followed by your application code.
+클라이언트에서는, 패키지에서의 `startup` 콜백이 가장 먼저 실행되고, `.html` 파일에 있는 
+`<body>` 템플릿이 다음 순서이며 애플리케이션 코드가 그 다음으로 실행된다.
 
     // On server startup, if the database is empty, create some initial data.
     if (Meteor.isServer) {
@@ -49,26 +45,23 @@ followed by your application code.
 
 {{> autoApiBox "Meteor.release"}}
 
-<h2 id="publishandsubscribe"><span>Publish and subscribe</span></h2>
+<h2 id="publishandsubscribe"><span>발행(publish)과 구독(subscribe)</span></h2>
 
-These functions control how Meteor servers publish sets of records and
-how clients can subscribe to those sets.
+이 함수들은 미티어 서버가 레코드 셋을 발행(publish)하는 방법과 클라이언트들이 그 셋을 구독(subscribe)하는 방법을 제어한다.
 
 {{> autoApiBox "Meteor.publish"}}
 
-To publish records to clients, call `Meteor.publish` on the server with
-two parameters: the name of the record set, and a *publish function*
-that Meteor will call each time a client subscribes to the name.
+레코드를 클라이언트로 발행(publish)하려면, 서버에서 `Meteor.publish`를 두 개의 매개변수를 지정하여 
+호출한다: 레코드 셋의 명칭, 그리고 클라이언트가 이 명칭으로 구독(subscribe)할 때마다 미티어가 
+호출할 *publish function*.
 
-Publish functions can return a
-[`Collection.Cursor`](#mongo_cursor), in which case Meteor
-will publish that cursor's documents to each subscribed client. You can
-also return an array of `Collection.Cursor`s, in which case Meteor will
-publish all of the cursors.
+발행(publish) 함수는 [`Collection.Cursor`](#mongo_cursor)를 리턴하는데, 이 경우 미티어는 
+해당 커서의 도큐먼트들을 각 구독하는 클라이언트에 발행한다. 또한 `Collection.Cursor`의 배열을 리턴할 수도 있는데, 
+이 경우 미티어는 해당 커서 전체를 발행한다.
 
 {{#warning}}
-If you return multiple cursors in an array, they currently must all be from
-different collections. We hope to lift this restriction in a future release.
+만약 배열에서 복수의 커서를 리턴한다면, 이 커서들은 모두 각각 다른 컬렉션에서 온 것이어야 한다. 추후 배포 버전에서는 
+이 제한이 풀리기를 바란다.
 {{/warning}}
 
     // server: publish the rooms collection, minus secret info.
@@ -92,19 +85,17 @@ different collections. We hope to lift this restriction in a future release.
       ];
     });
 
-Alternatively, a publish function can directly control its published record set
-by calling the functions [`added`](#publish_added) (to add a new document to the
-published record set), [`changed`](#publish_changed) (to change or clear some
-fields on a document already in the published record set), and
-[`removed`](#publish_removed) (to remove documents from the published record
-set).  These methods are provided by `this` in your publish function.
 
-If a publish function does not return a cursor or array of cursors, it is
-assumed to be using the low-level `added`/`changed`/`removed` interface, and it
-**must also call [`ready`](#publish_ready) once the initial record set is
-complete**.
+한 편, publish 함수는 그 발행 레코드 셋을 직접 제어할 수 도 있다. 그 방법은 (발행된 레코드 셋에 
+신규 도큐먼트를 추가하기 위한) [`added`](#publish_added), (발행된 레코드 셋의 임의의 도큐먼트에 
+대하여 일부 필드를 변경하거나 삭제하기 위한) [`changed`](#publish_changed), 
+그리고 (발행된 레코드 셋으로부터 도큐먼트들을 삭제하기 위한) [`removed`](#publish_removed)가 있다.
+이 메서드들은 publish 함수에서 `this`에 의해서 제공된다.
 
-Example:
+만약 publish 함수가 커서나 커서의 배열을 리턴하지 않는다면, 저수준의 `added`/`changed`/`removed` 
+인터페이스를 사용하고 있다고 간주하며, **첫 레코드 셋이 완료되면 [`ready`](#publish_ready)를 호출해야 한다**. 
+
+예제:
 
     // server: publish the current size of a collection
     Meteor.publish("counts-by-room", function (roomId) {
@@ -172,15 +163,13 @@ Example:
     });
 
 {{#warning}}
-Meteor will emit a warning message if you call `Meteor.publish` in a
-project that includes the `autopublish` package.  Your publish function
-will still work.
+미티어는 `autopublish` 패키지가 포함된 프로젝트에서 `Meteor.publish`를 호출하면 경고 메시지를 
+낸다. 하지만 publish 함수는 그대로 작동한다.
 {{/warning}}
 
 {{> autoApiBox "Subscription#userId"}}
 
-This is constant. However, if the logged-in user changes, the publish
-function is rerun with the new value.
+이 값은 상수이다. 그런데, 로그인 사용자가 변경되면, publish 함수가 재실행되고 새로운 값이 지정된다.
 
 {{> autoApiBox "Subscription#added"}}
 {{> autoApiBox "Subscription#changed"}}
@@ -188,8 +177,8 @@ function is rerun with the new value.
 {{> autoApiBox "Subscription#ready"}}
 {{> autoApiBox "Subscription#onStop"}}
 
-If you call [`observe`](#observe) or [`observeChanges`](#observe_changes) in your
-publish handler, this is the place to stop the observes.
+Publish 핸들러에서 [`observe`](#observe)나 [`observeChanges`](#observe_changes)를 
+호출하면, 그 observe를 중지하는 코드를 여기에서 작성하면 된다.
 
 {{> autoApiBox "Subscription#error"}}
 {{> autoApiBox "Subscription#stop"}}
